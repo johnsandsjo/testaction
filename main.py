@@ -1,4 +1,2 @@
-
-
-def adder(a, b)
-  return a + b
+def adder(a):
+  return a + 1
