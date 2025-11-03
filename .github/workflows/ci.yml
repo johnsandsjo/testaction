@@ -1,0 +1,54 @@
+# Task 4
+
+name: JS - 2 jobs with test
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  Greeting1: Well, hello
+  Greeting2: Good bye
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+  
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        # Install pytest
+        pip install pytest
+
+    - name: Run Pytest
+      run: |
+        # The pytest command will find and execute all functions starting with 'test_'
+        pytest
+  
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Simple Build Simulation
+      run: | 
+        echo "Starting build..."
+        echo "Build completed."
