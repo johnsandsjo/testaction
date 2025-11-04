@@ -15,44 +15,31 @@ def connect_db():
     conn.autocommit = True
     return conn
 
-# --- 3. Database Operations ---
 def create_table(conn):
-    """Creates a simple 'users' table if it doesn't already exist."""
-    cursor = conn.cursor()
-    try:
+    """Creates a simple 'user' table"""
+
+    with conn.cursor() as connection:
         create_table_query = """
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             email VARCHAR(100) UNIQUE NOT NULL
-        );
+            );
         """
-        cursor.execute(create_table_query)
-        print("-> Table 'users' created or already exists.")
-    except Exception as e:
-        print(f"Error creating table: {e}")
-    finally:
-        cursor.close()
+        connection.execute(create_table_query)
+
 
 def insert_user(conn, name, email):
     """Inserts a new user record into the 'users' table."""
     cursor = conn.cursor()
-    try:
+    with conn.cursor() as conncection:
         insert_query = sql.SQL(
             "INSERT INTO users (name, email) VALUES ({}, {})"
         ).format(
             sql.Literal(name),
             sql.Literal(email)
         )
-        cursor.execute(insert_query)
-        print(f"-> Inserted user: {name} ({email})")
-    except psycopg2.IntegrityError:
-        # Catch duplicate key errors (if email already exists)
-        print(f"-> Skipping insert: User with email {email} already exists.")
-    except Exception as e:
-        print(f"Error inserting data: {e}")
-    finally:
-        cursor.close()
+        conncection.execute(insert_query)
 
 def select_all_users(conn):
     """Retrieves and prints all records from the 'users' table."""
