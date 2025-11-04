@@ -1,0 +1,45 @@
+name: Gemini help build and push
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+
+    # 3. Define environment variables for easy use
+    env:
+      DOCKER_IMAGE: johnsandsjo91826/johntestactiondocker
+      DOCKERFILE_PATH: ./dockerfile
+      
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      # Checks out your repository code so the workflow can access the Dockerfile and app.
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.DOCKER_IMAGE }}
+        # Automatically generates the image tag using the Git SHA or branch name.
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: . # Path to the build context (where the Dockerfile is)
+        file: ${{ env.DOCKERFILE_PATH }}
+        push: true # This flag tells the action to push the image to Docker Hub
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+      # This step performs the actual build and push operation.
