@@ -10,6 +10,7 @@ jobs:
 
     # 3. Define environment variables for easy use
     env:
+    #name and path that the final built image must have to be pushed to the correct location in Docker Hub
       DOCKER_IMAGE: johnsandsjo91826/johntestactiondocker
       DOCKERFILE_PATH: ./dockerfile
       
@@ -27,12 +28,12 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.DOCKER_IMAGE }}
-        # Automatically generates the image tag using the Git SHA or branch name.
+ #   - name: Extract metadata (tags, labels) for Docker
+  #    id: meta
+   #   uses: docker/metadata-action@v5
+    #  with:
+     #   images: ${{ env.DOCKER_IMAGE }}
+      #  # Automatically generates the image tag using the Git SHA or branch name.
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
@@ -40,6 +41,6 @@ jobs:
         context: . # Path to the build context (where the Dockerfile is)
         file: ${{ env.DOCKERFILE_PATH }}
         push: true # This flag tells the action to push the image to Docker Hub
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: hej #${{ steps.meta.outputs.tags }}
+        #labels: ${{ steps.meta.outputs.labels }}
       # This step performs the actual build and push operation.
