@@ -41,6 +41,6 @@ jobs:
         context: . # Path to the build context (where the Dockerfile is)
         file: ${{ env.DOCKERFILE_PATH }}
         push: true # This flag tells the action to push the image to Docker Hub
-        tags: latest #${{ steps.meta.outputs.tags }}
+        tags: main #${{ steps.meta.outputs.tags }}
         #labels: ${{ steps.meta.outputs.labels }}
       # This step performs the actual build and push operation.
