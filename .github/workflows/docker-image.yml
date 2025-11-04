@@ -27,5 +27,5 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          hello_world:latest
+          johnsandsjo91826/johntestactiondocker:latest
     
