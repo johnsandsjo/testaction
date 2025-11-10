@@ -1,9 +1,18 @@
 #1 pipeline startar vid push till din branch hela vägen till deploy
 #vara tydliga namngivningar för bland annat workflows, jobs och steps.
+name: main workflow
 
-#2. Användning av environment-variabler, GitHub-kontextvariabler och GitHub Secrets
-#(till exempel, API-nycklar och Docker-credentials).
+on:
+  push:
+    branches:
+      - main
 
+  workflow_dispatch:
+
+#API key and Docker credential
+env:
+  API_KEY: ${{ secrets.GITHub}}
+      
 #3. Logik och beroenden (användning av needs och if-satser) ska användas i pipelinen.
 
 #4. Pipelinen ska kunna triggas manuellt med workflow_dispatch erbjuda en parameter för att logga fel:
