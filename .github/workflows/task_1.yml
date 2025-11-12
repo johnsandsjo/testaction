@@ -1,0 +1,21 @@
+#Instruktioner
+#1. Lägg till en workflow_dispatch-trigger som tar in minst en input (till exempel sträng).
+#2. Lägg till ett jobb som kör ett skript som visar upp värdet från inputen.
+name: Uppgift 1 – Workflow Dispatch Input
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_one:
+        description: 'Add an input'
+        #type: boolean
+        required: true
+        default: false
+
+jobs:
+  printer:
+    runs-on: ubuntu-latest
+    steps:
+    - name: print
+      run: echo ${{ github.event.inputs.task_one }}
+      #run: echo ${{ github.event.inputs.task_one == 'true' }}
