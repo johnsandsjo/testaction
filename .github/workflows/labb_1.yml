@@ -6,10 +6,13 @@ name: Uppgift 1 – Workflow Dispatch Input
 on:
   workflow_dispatch:
     inputs:
-      task_one:
+      task_one_input_1:
         description: 'Add an input'
-        #type: boolean
         required: true
+      task_one_input_2:
+        description: 'Add another input'
+        type: boolean
+        required: false
         default: false
 
 jobs:
@@ -19,3 +22,6 @@ jobs:
     - name: print
       run: echo ${{ github.event.inputs.task_one }}
       #run: echo ${{ github.event.inputs.task_one == 'true' }}
+
+#Vad händer om du inte anger något värde?
+#Hur kan du lägga till fler inputs av olika typer (till exempel choice, boolean)?
