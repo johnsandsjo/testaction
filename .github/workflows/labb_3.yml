@@ -25,33 +25,29 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.run_tests == 'true' }}
     steps:
-    - name: test
-      run: echo "tests are starting"
+    - name: test step
+      run: echo "test is testing"
   build:
     runs-on: ubuntu-latest
     needs: test
-    if: always()
+    #if: always()
     steps:
-    - name: test
-      run: echo "tests are starting"
+    - name: build step
+      run: echo "build is building"
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    if: always()
     steps:
-    - name: test
-      run: echo "tests are starting"
+    - name: deploy step
+      run: echo "deploy is deploying"
   
-  
-#Tips:
-#----Fundera på vad som händer med needs: när ett jobb hoppar över ett tidigare steg.
-#Testa att lägga till if: always() på ett steg som du vill ska köras oavsett fel.
-
 #Reflektion
 #Hur kan du använda needs: för att stoppa ett workflow vid fel?
+# Needs använder statusen på jobbet tidigare. Status kan vara success, failure, or skipped. Om det är success så körs jobbet, om inte så körs det ej. 
+#Men för att kunna ha test-flaggan på så behöver man skriva över statusen med if: always()
 #Hur kan du skapa ett jobb som alltid körs sist (till exempel för notifiering)?
-
-#Tips:
-#Kika på if: always() och needs: [test, build, deploy].
+# Genom att använda if: always() så körs jobbet oavsett status på jobbet man är beriende va tidigare även vid skipped
 
 #Vilka problem jag stötte på
 #När jag jag bara har needs test och jag tar bort flaggan för test så körs inga steg. Eftersom needs ska komma efteråt och jobbet aldrig startar startar inget.
