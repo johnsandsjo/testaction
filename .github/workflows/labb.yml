@@ -1,0 +1,57 @@
+name: Labb - Workflow Dispatch, If-statser och Needs i GitHub Actions
+
+#-----------------------------------
+#Uppgift 1 – Workflow Dispatch Input
+#-----------------------------------
+
+#Instruktioner
+#1. Lägg till en workflow_dispatch-trigger som tar in minst en input (till exempel sträng).
+#2. Lägg till ett jobb som kör ett skript som visar upp värdet från inputen.
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_one_input_1:
+        description: 'Add an input'
+        required: true
+      task_one_input_2:
+        description: 'Add another input'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  printer:
+    runs-on: ubuntu-latest
+    steps:
+    - name: print
+      run: echo ${{ github.event.inputs.task_one }}
+      #run: echo ${{ github.event.inputs.task_one == 'true' }}
+
+#Reflektion
+#Vad händer om du inte anger något värde?
+#beror på om den är required eller inte, om inte required blir man promptad att fylla i innan man kan fortsätta
+#Hur kan du lägga till fler inputs av olika typer (till exempel choice, boolean)?
+# se ovan för boolena
+
+#----------------------
+#Uppgift 2 – If-statser
+#----------------------
+#Instruktioner
+#1. Utgå från workflowet i uppgift 1.
+#2. Lägg till två steg:
+#Ett som bara körs om variabel == ett bestämt värde
+#Ett som bara körs om variabel == något annat
+#3. Kör workflowet flera gånger med olika val och observera skillnaden i loggarna.
+    - name: if1
+      if: ${{ github.event.inputs.task_one_input_1 == 'drive' }}
+      run: echo "this runs because you typed the right word"
+    
+    - name: if2
+      if: ${{ github.event.inputs.task_one_input_2 == 'true' }}
+      run: echo "this runs because you chose true"
+
+#Reflektion
+#Hur används if: på jobb-nivå jämfört med steg-nivå?
+#Väldigt likt, antingen styr man körning av nästa steg inom jobbet eller körs nästa jobb 
+#Vad händer om inget villkor uppfylls?
