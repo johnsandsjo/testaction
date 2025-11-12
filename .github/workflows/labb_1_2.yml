@@ -1,4 +1,4 @@
-name: Labb - Workflow Dispatch, If-statser och Needs i GitHub Actions
+name: Labb uppg 1 & 2- Workflow Dispatch, If-statser och Needs i GitHub Actions
 
 #-----------------------------------
 #Uppgift 1 – Workflow Dispatch Input
@@ -55,3 +55,4 @@ jobs:
 #Hur används if: på jobb-nivå jämfört med steg-nivå?
 #Väldigt likt, antingen styr man körning av nästa steg inom jobbet eller körs nästa jobb 
 #Vad händer om inget villkor uppfylls?
+#Båda stegen skippas men jobbet körs klart med success
