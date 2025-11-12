@@ -1,0 +1,56 @@
+name: Labb uppg 3 - Workflow Dispatch, If-statser och Needs i GitHub Actions
+
+#------------------------------------
+#Uppgift 3 – Needs och flödeskontroll
+#------------------------------------
+#1. Skapa tre jobb: test, build, deploy
+#2. Använd needs: för att styra att:
+#build bara körs efter test
+#deploy bara körs efter build
+#3. Lägg till en input som styr om tester ska köras eller inte (till exempel run_tests: true/false).
+#4. Använd if: för att hoppa över test-jobbet vid behov.
+#5. Kör workflowet både med och utan tester och se hur flödet påverkas.
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_tests:
+        description: 'Mark to run tests'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.run_tests == 'true' }}
+    steps:
+    - name: test
+      run: echo "tests are starting"
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: test
+      run: echo "tests are starting"
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: test
+      run: echo "tests are starting"
+  
+  
+#Tips:
+# Fundera på vad som händer med needs: när ett jobb hoppar över ett tidigare steg.
+# Testa att lägga till if: always() på ett steg som du vill ska köras oavsett fel.
+
+#Reflektion
+#Hur kan du använda needs: för att stoppa ett workflow vid fel?
+#Hur kan du skapa ett jobb som alltid körs sist (till exempel för notifiering)?
+
+#Tips:
+#Kika på if: always() och needs: [test, build, deploy].
+
+#Vilka problem jag stötte på
+
