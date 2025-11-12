@@ -30,6 +30,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+    if: always()
     steps:
     - name: test
       run: echo "tests are starting"
@@ -42,8 +43,8 @@ jobs:
   
   
 #Tips:
-# Fundera på vad som händer med needs: när ett jobb hoppar över ett tidigare steg.
-# Testa att lägga till if: always() på ett steg som du vill ska köras oavsett fel.
+#----Fundera på vad som händer med needs: när ett jobb hoppar över ett tidigare steg.
+#Testa att lägga till if: always() på ett steg som du vill ska köras oavsett fel.
 
 #Reflektion
 #Hur kan du använda needs: för att stoppa ett workflow vid fel?
@@ -53,4 +54,4 @@ jobs:
 #Kika på if: always() och needs: [test, build, deploy].
 
 #Vilka problem jag stötte på
-
+#När jag jag bara har needs test och jag tar bort flaggan för test så körs inga steg. Eftersom needs ska komma efteråt och jobbet aldrig startar startar inget.
